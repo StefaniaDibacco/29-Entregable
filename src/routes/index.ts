@@ -30,12 +30,13 @@ router.use('/info', (req: Request, res: Response) => {
     folder: process.cwd(),
   };
 
-  res.json({ data: info });
+  res.json({ data: info, pid: process.pid });
 });
 
 router.use('/randoms', (req: Request, res: Response) => {
   const { cant } = req.query;
   const numberQty = cant || String(100000000);
+  console.log(`PID => ${process.pid} will work slow`);
   const scriptPath = path.resolve(
     __dirname,
     '../../dist/utils/getRandomNums.js'
@@ -46,5 +47,11 @@ router.use('/randoms', (req: Request, res: Response) => {
   numData.on('message', (result) => {
     res.json({ data: result });
   });
+});
+
+router.get('/dead', (req, res) => {
+  res.json({ msg: 'OK' });
+  console.log(`PID => ${process.pid} will die`);
+  process.exit(0);
 });
 export default router;

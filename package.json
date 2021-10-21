@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./dist/index.js",
     "dev": "tsc -W && start",
+    "prod": "npm run build && node_modules/.bin/forever -w start ./dist/src/index.js",
+    "prod:pm2:fork": "npm run build && node_modules/.bin/pm2 start ecosystem.config.js --only app-fork",
+    "prod:pm2:cluster": "npm run build && node_modules/.bin/pm2 start ecosystem.config.js --only app-cluster",
     "build": "tsc"
   },
   "repository": {
@@ -23,6 +26,7 @@
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/express-handlebars": "^5.3.1",
+    "@types/minimist": "^1.2.2",
     "@types/node": "^16.7.1",
     "@types/passport": "^1.0.7",
     "@types/passport-local": "^1.0.34",
@@ -60,6 +64,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "forever": "^4.0.1",
     "knex": "^0.95.10",
     "mongoose": "^6.0.9",
     "mysql": "^2.18.1",
@@ -67,6 +72,7 @@
     "passport-facebook": "^3.0.0",
     "passport-local": "^1.0.0",
     "passport-twitter": "^1.0.4",
+    "pm2": "^5.1.2",
     "sqlite3": "^4.2.0"
   }
 }
